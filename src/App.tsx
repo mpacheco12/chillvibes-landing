@@ -62,8 +62,8 @@ export function App() {
               >
                 its own
               </em>{" "}
-              products. no clients, no investors, no decks. just a few small
-              humans making things we want to use.
+              products. no clients, no investors, no decks. just a few
+              developers making things we want to use.
             </p>
 
             <div className="flex flex-wrap items-center gap-3">
