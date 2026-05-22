@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0512;
+      --ink: #f4eada;
+      --ink-soft: #a796c5;
+      --pink: #ff6dc8;
+      --cyan: #6dd5ff;
+      --purple: #a78bfa;
+      --green: #5af542;
+      --magenta: #c450ff;
+    }
+    *,*::before,*::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      width: 1200px;
+      height: 630px;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      overflow: hidden;
+      position: relative;
+      background-image:
+        radial-gradient(900px 600px at 90% -10%, rgba(196,80,255,0.30), transparent 70%),
+        radial-gradient(800px 500px at -10% 30%, rgba(109,213,255,0.18), transparent 70%),
+        radial-gradient(700px 500px at 50% 110%, rgba(255,109,200,0.22), transparent 70%);
+    }
+    .scanlines {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image: repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 3px);
+      mix-blend-mode: overlay; opacity: 0.5;
+    }
+    .frame {
+      position: absolute; inset: 32px;
+      border: 1px solid rgba(167,139,250,0.25);
+      border-radius: 24px;
+      pointer-events: none;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      padding: 72px 80px;
+      gap: 32px;
+    }
+    .eyebrow {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 18px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 28px;
+    }
+    .eyebrow::before { content: ">_ "; font-weight: 700; }
+
+    h1 {
+      font-family: "Bricolage Grotesque", sans-serif;
+      font-weight: 700;
+      font-size: 132px;
+      line-height: 0.92;
+      letter-spacing: -0.045em;
+      margin: 0 0 24px;
+    }
+    .line { display: block; }
+    .we { color: var(--ink); }
+    .saas {
+      background: linear-gradient(95deg, var(--cyan), var(--purple) 50%, var(--pink) 90%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .tagline {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 24px;
+      line-height: 1.4;
+      color: var(--ink-soft);
+      max-width: 540px;
+      margin: 0 0 36px;
+    }
+    .tagline em {
+      font-style: normal;
+      font-family: "JetBrains Mono", monospace;
+      color: var(--green);
+      font-size: 22px;
+    }
+    .meta {
+      display: flex;
+      gap: 22px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 15px;
+      color: var(--ink-soft);
+      text-transform: lowercase;
+    }
+    .meta .pip {
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      margin-right: 9px;
+      vertical-align: middle;
+    }
+    .meta .pip.g { background: var(--green); box-shadow: 0 0 12px var(--green); }
+    .meta .pip.p { background: var(--pink); box-shadow: 0 0 12px var(--pink); }
+    .meta .pip.c { background: var(--cyan); box-shadow: 0 0 12px var(--cyan); }
+
+    .mascot-wrap {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mascot-orb {
+      position: absolute;
+      inset: 10%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 50%, rgba(196,80,255,0.55), transparent 60%);
+      filter: blur(40px);
+    }
+    .mascot {
+      position: relative;
+      width: 86%;
+      height: auto;
+      filter:
+        drop-shadow(0 30px 50px rgba(196,80,255,0.55))
+        drop-shadow(0 0 24px rgba(255,109,200,0.25));
+    }
+    .spark {
+      position: absolute;
+      font-family: "Bricolage Grotesque", sans-serif;
+      font-weight: 700;
+    }
+    .s1 { top: 4%; left: 8%; color: var(--purple); font-size: 44px; }
+    .s2 { top: 12%; right: 8%; color: var(--cyan); font-size: 36px; }
+    .s3 { bottom: 18%; right: 4%; color: var(--pink); font-size: 30px; }
+
+    .corner {
+      position: absolute;
+      top: 56px;
+      left: 80px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: "Bricolage Grotesque", sans-serif;
+      font-weight: 700;
+      font-size: 26px;
+      letter-spacing: -0.025em;
+    }
+    .corner img { height: 38px; width: auto; }
+    .corner .a { color: var(--ink); }
+    .corner .b {
+      background: linear-gradient(95deg, var(--cyan), var(--purple), var(--pink));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .corner .c {
+      background: linear-gradient(95deg, var(--purple), var(--magenta));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-size: 22px;
+      margin-left: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="scanlines"></div>
+  <div class="frame"></div>
+
+  <div class="corner">
+    <img src="mascot.png" alt="" />
+    <span><span class="a">chill </span><span class="b">vibes</span><span class="c">inc._</span></span>
+  </div>
+
+  <div class="grid">
+    <div>
+      <div class="eyebrow">you found the website. cool.</div>
+      <h1>
+        <span class="line we">we make</span>
+        <span class="line saas">saas.</span>
+      </h1>
+      <p class="tagline">a software studio building <em>its own</em> products. no clients, no investors, no decks.</p>
+      <div class="meta">
+        <span><span class="pip g"></span>est. recently</span>
+        <span><span class="pip p"></span>shipped: 0</span>
+        <span><span class="pip c"></span>vibes: high</span>
+      </div>
+    </div>
+
+    <div class="mascot-wrap">
+      <div class="mascot-orb"></div>
+      <span class="spark s1">✦</span>
+      <span class="spark s2">✦</span>
+      <span class="spark s3">+</span>
+      <img class="mascot" src="mascot.png" alt="" />
+    </div>
+  </div>
+</body>
+</html>
