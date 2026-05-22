@@ -5,7 +5,7 @@ export interface Faq {
 
 export const faqs: Faq[] = [
   {
-    q: "why does this website exist if you don't sell anything yet?",
+    q: "why does this website exist?",
     a: 'because apparently you need one. also we got tired of explaining "yes the company is real" in DMs. now we can just send a link.',
   },
   {
@@ -14,7 +14,7 @@ export const faqs: Faq[] = [
   },
   {
     q: "what are you actually building?",
-    a: 'three things. one is for indie devs. one involves ai (sorry). one is still a sticky note. see "in the lab" above for the full extent of what we can publicly say.',
+    a: 'three things. one is live (meetn.ai — an ai scheduling assistant). one is in stealth. one is still a sticky note. see "in the lab" above for the full extent of what we can publicly say.',
   },
   {
     q: "are you raising? hiring?",

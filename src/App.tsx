@@ -120,7 +120,7 @@ export function App() {
                   }}
                   aria-hidden="true"
                 />
-                products shipped: 0
+                products shipped: 1
               </span>
               <span className="inline-flex items-center gap-2 whitespace-nowrap">
                 <span
@@ -184,8 +184,8 @@ export function App() {
             </p>
             <p className="m-0">
               we made this website because we were told that businesses need
-              websites — even ones that haven't shipped anything yet. so here
-              it is. there will be real products here soon. promise.
+              websites. so here it is. our first product, meetn.ai, is live.
+              more are cooking.
             </p>
           </div>
         </div>
@@ -218,9 +218,9 @@ export function App() {
               className="m-0 max-w-[600px] text-ink-soft"
               style={{ fontSize: 17, lineHeight: 1.55 }}
             >
-              three things we're building right now. none are ready. all are
-              real. drop your email at the bottom and we'll tell you the second
-              one ships.
+              three projects. one is live, two are cooking. all are real.
+              drop your email at the bottom and we'll tell you the next one
+              ships.
             </p>
           </div>
 
@@ -343,7 +343,7 @@ export function App() {
                 className="my-[18px] mb-7 max-w-[480px] text-ink-soft max-[979px]:mx-auto"
                 style={{ fontSize: 17, lineHeight: 1.55 }}
               >
-                drop your email and we'll send one short note when our first
+                drop your email and we'll send one short note when the next
                 thing is live. no newsletter, no funnels, no "10 ways"
                 listicles. just a heads up.
               </p>
