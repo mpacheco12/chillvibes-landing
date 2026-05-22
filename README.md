@@ -10,7 +10,7 @@ Vite + React + TypeScript + Tailwind v4. Deployed as a static bundle to GitHub P
 - **React 19** + **TypeScript** — components are in `src/components/`
 - **Tailwind v4** — all design tokens live in `src/index.css` via `@theme`; no `tailwind.config.js`
 - **Google Apps Script** — email signup posts directly to a Sheet-backed web app (no backend, no key)
-- **GitHub Actions** — `main` → `gh-pages` via `.github/workflows/deploy.yml`
+- **GitHub Actions** — `main` builds and uploads to GitHub Pages via `.github/workflows/deploy.yml`
 
 ## Local dev
 
@@ -24,20 +24,20 @@ npm run typecheck
 
 ## Configuration (env vars)
 
-Vite picks these up at build time. Set them locally in a `.env.local` (gitignored) and in **GitHub repo settings → Variables**:
+Vite picks these up at build time. Set them locally in a `.env.local` (gitignored). For CI, the workflow reads them from the GitHub repo's **Settings → Secrets and variables → Actions** — pay attention to **Secrets** vs **Variables**:
 
-| Variable | Required | Notes |
-| --- | --- | --- |
-| `VITE_SHEET_ENDPOINT` | yes for real signups | Your Apps Script Web App URL (`https://script.google.com/macros/s/.../exec`). The form POSTs `email=...` here. If unset, the form still shows the "on the list. thanks." confirmation but doesn't send. |
-| `VITE_BASE_PATH` | yes for project pages | `/` for user/org sites (`<user>.github.io`). `/<repo>/` for project pages (`<user>.github.io/<repo>/`). |
-| `VITE_SITE_URL` | optional | Public site URL used in OG/canonical tags (no trailing slash). |
+| Name | Where in GitHub | Required | Notes |
+| --- | --- | --- | --- |
+| `VITE_SHEET_ENDPOINT` | **Secret** | yes for real signups | Your Apps Script Web App URL (`https://script.google.com/macros/s/.../exec`). Form POSTs `email=...` here. Treated as a secret because anyone with the URL can append rows. If unset, the form still shows the "on the list. thanks." confirmation but doesn't send. |
+| `VITE_BASE_PATH` | **Variable** | yes for project pages | `/` for user/org sites (`<user>.github.io`) or a custom apex domain. `/<repo>/` for project pages (`<user>.github.io/<repo>/`). For this repo (`mpacheco12/chillvibes-landing`) → `/chillvibes-landing/`, or `/` once the custom apex is wired. |
+| `VITE_SITE_URL` | **Variable** | optional | Public site URL used in OG / canonical tags (no trailing slash). |
 
 Sample `.env.local`:
 
 ```
 VITE_SHEET_ENDPOINT=https://script.google.com/macros/s/AKfycb.../exec
-VITE_BASE_PATH=/Landing/
-VITE_SITE_URL=https://yourname.github.io/Landing
+VITE_BASE_PATH=/chillvibes-landing/
+VITE_SITE_URL=https://chillvibessoftware.com
 ```
 
 ### Wiring the Google Sheet (one-time setup)
@@ -70,7 +70,7 @@ VITE_SITE_URL=https://yourname.github.io/Landing
 │   │   ├── ServiceCard.tsx        # Lab card with variant tint
 │   │   ├── PrincipleStep.tsx      # Numbered step with responsive borders
 │   │   ├── FaqItem.tsx            # Native <details> accordion row
-│   │   ├── SignupForm.tsx         # Buttondown form + status
+│   │   ├── SignupForm.tsx         # Google Sheet form + status
 │   │   └── Footer.tsx             # Grid + ASCII art + version row
 │   └── data/                      # services, principles, faqs, marquee
 ├── index.html                     # SEO meta, OG tags, JSON-LD Organization
@@ -93,8 +93,15 @@ The form posts `email=...` (form-encoded) to a Google Apps Script web app with `
 
 1. Push the repo to GitHub.
 2. **Settings → Pages → Source → GitHub Actions.**
-3. **Settings → Secrets and variables → Actions → Variables** — add `VITE_BASE_PATH` (set to `/<repo>/` for a project page) and `VITE_BUTTONDOWN_USERNAME`.
+3. **Settings → Secrets and variables → Actions**:
+   - **Secrets** tab → `VITE_SHEET_ENDPOINT` = your Apps Script Web App URL.
+   - **Variables** tab → `VITE_BASE_PATH` = `/chillvibes-landing/` (project page) or `/` (custom apex / user site).
+   - **Variables** tab → `VITE_SITE_URL` = public URL (optional, for OG / canonical).
 4. Push to `main`. The workflow builds + publishes.
+
+### Custom domain (optional)
+
+Setting a custom domain via **Settings → Pages → Custom domain** creates a `CNAME` file in the repo and serves the site at the apex. When that happens, set `VITE_BASE_PATH=/` (not `/chillvibes-landing/`) — the project-page prefix goes away.
 
 ## What was intentionally not included
 
