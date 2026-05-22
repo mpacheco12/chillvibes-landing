@@ -1,0 +1,36 @@
+# dependencies
+node_modules
+.pnpm-store
+
+# build
+dist
+dist-ssr
+*.local
+
+# playwright MCP runtime cache
+.playwright-mcp
+
+# local tooling state
+.claude
+.harness-mem
+
+# logs
+*.log
+npm-debug.log*
+
+# editor
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# env
+.env
+.env.local
+.env.*.local
+!.env.example
